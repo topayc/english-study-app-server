@@ -1,0 +1,67 @@
+<%= button_to "Change_Password", pwd_change_sessions_url %>
+<%= button_to "Reward_Control", admin_users_reward_control_url %>
+<div class = 'noset'>
+  <b>User Count : <%=@counting%></b> 
+</div>
+<div class="search_form">
+  <%= form_tag admin_users_path, :method => :get do %>
+    <span class="form_label">유저검색하기</span>
+    <%= text_field_tag :search_user, params[:search_user], :class=>'text' %>
+    <%= submit_tag "검색", :class => "btn btn-small" %>
+    <% end %>
+</div>
+<%= form_tag(admin_users_path(:before_page => @page), method: "post", id: "confirm_form") %>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>Email</th>
+      <th>Facebook</th>
+      <th>Nickname</th>
+      <th>Recommend</th>
+      <th>Sex</th>
+      <th>Birth</th>
+      <th>Address</th>
+      <th>Mobile</th>
+      <th>Interest</th>
+      <th>Created Datetime</th>
+      <th>Last test</th>
+      <th>Level test</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.id %></td>
+        <td><%= user.email %></td>
+        <td><%= user.facebook %></td>
+        <td><%= user.nickname %></td>
+        <td><%= user.recommend %></td>
+        <td><%= "M" if user.sex ==1 %><%= "F" if user.sex ==2%></td>
+        <td><%= user.birth %></td>
+        <td><%= user.address %></td>
+        <td><%= user.mobile %></td>
+        <td><%= user.interest %></td>
+        <td><%= user.created_at %></td>
+        <td><%= user.last_test %></td>
+        <td><%= if user.level_test == 1
+                  "O"
+                elsif user.level_test != 0
+                  user.level_test
+                end%></td>
+        <td><%= link_to 'Edit', edit_admin_user_path(user), :class=>'btn btn-warning' %></td>
+        <td><%#= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' }, :class=>"btn btn-danger" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<div style='text-align:right'>
+  <%= paginate(@users) %>
+</div>
+

@@ -1,0 +1,104 @@
+<%= form_for [:admin, @app_info] do |f| %>
+  
+  <div class="control-group">
+    <label class="control-label">time_quick_ans</label>
+    <div class="controls">
+      <label><%= f.text_field :time_quick_ans %></label>
+    </div>
+  </div>
+  
+  <div class="control-group">
+    <label class="control-label">one_medal</label>
+    <div class="controls">
+      <label><%= f.text_field :one_medal %></label>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">two_medal</label>
+    <div class="controls">
+      <label><%= f.text_field :two_medal %></label>
+    </div>
+  </div>
+  
+  <div class="control-group">
+    <label class="control-label">test_reward_max</label>
+    <div class="controls">
+      <label><%= f.text_field :test_reward_max %></label>
+    </div>
+  </div>
+  
+  <div class="control-group">
+    <label class="control-label">android_version</label>
+    <div class="controls">
+      <label><%= f.text_field :android_version %></label>
+    </div>
+  </div>
+  
+  <div class="control-group">
+    <label class="control-label">ios_version</label>
+    <div class="controls">
+      <label><%= f.text_field :ios_version %></label>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">app_server</label>
+    <div class="controls">
+      <label><%= f.text_field :app_server %></label>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">popup_style</label>
+    <div class="controls">
+      <label><%= f.radio_button :popup_style, 0, :checked => f.object.popup_style  == 0  %>None</label>
+      <label><%= f.radio_button :popup_style, 1, :checked => f.object.popup_style  == 1 %>Image</label>
+      <label><%= f.radio_button :popup_style , 2, :checked => f.object.popup_style  == 2 %>Text</label>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">popup_image</label>
+    <div class="controls">
+      <label><%= f.file_field :popup_image %></label>
+      <% if @app_info.popup_image.present? %>
+        <img src='<%=@app_info.popup_image_url%>'/>
+      <% end %>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">popup_text</label>
+    <div class="controls">
+      <label><%= f.text_field :popup_text %></label>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">new_stage_day_limit</label>
+    <div class="controls">
+      <label><%= f.text_field :new_stage_day_limit %></label>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">android_package</label>
+    <div class="controls">
+      <label><%= f.text_field :android_package_name %></label>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">ios_package</label>
+    <div class="controls">
+      <label><%= f.text_field :ios_package_name %></label>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">android_market_url</label>
+    <div class="controls">
+      <label><%= f.text_field :market_url %></label>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">ios_appstore_url</label>
+    <div class="controls">
+      <label><%= f.text_field :appstore_url %></label>
+    </div>
+  </div>
+  <p><%= f.submit %></p>
+ 
+<% end %>

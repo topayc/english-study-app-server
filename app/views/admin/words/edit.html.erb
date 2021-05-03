@@ -1,0 +1,87 @@
+<!-- <%#= render 'form' %> more easier to work -->
+<% if @confirm.present? %>
+  <%= form_for [:admin, @word], url:{id: "#{@word.id}", action: 'confirm'} do |f| %>
+    <input type='hidden' name='confirm' value='1'/>
+    <div class="control-group" style='margin-top:5px;'>
+    </div>
+
+    <div class="control-fixed">
+      총 검토 단어 수 : <%=@picture_cnt%>개중 <b style='color:red'><%=@confirm_cnt%>개</b><br/><br/>
+      <%= f.submit :value => '최종저장', :class => 'btn-success' %> 
+      <input type='button' onclick="location.href='/admin/words/dummy/confirm'" class='btn-primary' value='Pass'/> 
+      <input type='button' onclick="location.href='/admin/words'" value='목록으로' class='btn-warning'/><br/><br/>
+      name <%= f.text_field :name, :readonly => true, :style => 'width:140px' %> 
+      phonetics <%= f.text_field :phonetics, :readonly => true, :style => 'width:86px' %><br/>
+      mean <%= f.text_field :mean, :style => 'width:309px'%> 
+      <br/>   
+      example_ko<br/>
+      <%= f.text_area :example_ko, :style => 'width:350px' %><br/>
+      example_en<br/>
+      <%= f.text_area :example_en, :style => 'width:350px' %><br/>
+      current_image(실제크기실제비율아님)<br/>
+      <% if f.object.picture != 0 %>
+        <%#=image_tag f.object.image_url(:thumb) %>
+        <%=image_tag f.object.image_url(:thumb), :style => 'width:356px;height:183px;' %>
+      <% else %>
+        없음 
+      <% end %><br/>
+      Img <%= f.file_field :image %><br/>
+      img-url <%= f.text_field :remote_image_url, :style=>'width:290px' %> <br/>
+      
+      <input type='hidden' name='before_page' value='<%=@page%>' />
+      <input type='hidden' name='before_align' value='<%=@isalign%>'/>
+    </div>
+  <% end %>
+<% else %>
+  <%= form_for [:admin, @word] do |f| %>
+    <input type='hidden' name='confirm' value='0'/>
+    <div class="control-group" style='margin-top:5px;'> 
+    </div>
+
+    <div class="control-fixed">
+      현재 이미지 없는거 : <b style='color:red;'><%=@picture_cnt%>개</b><br/><br/>
+      <%= f.submit :class => 'btn-primary' %> 
+      <input type="button" onclick="location.href='/admin/words/<%=@word.id%>/delete?before_page=<%=@page%>&is_align=<%=@isalign%>'" value='Delete Image' class='btn-warning'/> 
+      <br/><br/>
+      name <%= f.text_field :name, :readonly => true, :style => 'width:140px' %> 
+      phonetics <%= f.text_field :phonetics, :readonly => true, :style => 'width:86px' %><br/>
+      mean <%= f.text_field :mean, :style => 'width:309px'%> 
+      <br/>
+      example_ko<br/>
+      <%= f.text_area :example_ko, :style => 'width:350px' %><br/>
+      example_en<br/>
+      <%= f.text_area :example_en, :style => 'width:350px' %><br/>
+      current_image(실제크기실제비율아님)<br/>
+      <% if f.object.picture != 0 %>
+        <%#=image_tag f.object.image_url(:thumb) %>
+        <%=image_tag f.object.image_url(:thumb), :style => 'width:356px;height:183px;' %>
+      <% else %>
+        없음 
+      <% end %> 
+      <br/>
+      Img <%= f.file_field :image %><br/>
+      img-url <%= f.text_field :remote_image_url, :style=>'width:290px' %> <br/>
+      
+      <input type='hidden' name='before_page' value='<%=@page%>' />
+      <input type='hidden' name='before_align' value='<%=@isalign%>'/>
+    </div>
+    
+  <% end %>
+<% end %>
+  <%#= f.error_messages %>
+  
+<div id='about_image' style="position:absolute;">
+
+  <div class="word_images" style='background-color:#f1f1f1;margin-left:28px;'>
+  <%#= image_tag img, :alt => "img", :class=> "word_img" %>
+  </div>
+  <div class="loading">Loading...</div>
+  <div class='btn btn-danger' id = 'more-image' data-page=1 data-word=<%=@word.name%>>more</div>
+  <input type='hidden' name='before_query' value='<%=@word.name%>'/>
+  <input type='text' id='add_query' style='margin:10px;'/>
+  <p>
+    <%#= link_to "Show", [:admin, @word] %>
+    <%= link_to "View All", admin_words_path %>
+  </p>
+
+</div>

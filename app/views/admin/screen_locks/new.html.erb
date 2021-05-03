@@ -1,0 +1,19 @@
+
+<%= form_for @screen_lock, url: admin_screen_locks_path, html: {method: :post }  do |f| %>
+  <%= render 'form', f: f %>
+<% end %>
+
+<script>
+$(document).ready(function() {
+  $("input[name='lock_advertisement[link]']").change(function() {
+    if($(this).val() == '0') {
+      $('.link').show();
+      $('.ad_list').hide();
+    } else {
+      $('.link').hide();
+      $('.ad_list').show();
+    }
+  })
+});
+</script>
+<%= link_to 'Back', admin_screen_locks_path %>

@@ -1,0 +1,185 @@
+  <% if @screen_lock.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@screen_lock.errors.count, "error") %> prohibited this admin_screen_lock from being saved:</h2>
+
+      <ul>
+      <% @screen_lock.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <label class="control-label">name</label>
+    <div class="controls">
+      <label><%= f.text_field :ad_name %></label>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">link</label>
+    <div class="controls">
+      <label>
+        <%= f.radio_button :link, 0, :checked=>f.object.link ==0 || f.object.link == nil  %> Only Screen Lock
+      </label>
+      <label>
+        <%= f.radio_button :link, 1, :checked =>f.object.link ==1  %> Link CPD
+      </label>
+      <label>
+        <%= f.radio_button :link, 2, :checked =>f.object.link ==2  %> Link CPDM
+      </label>
+      <label>
+        <%= f.radio_button :link, 3, :checked =>f.object.link ==3  %> Link CPX
+      </label>
+    </div>
+  </div>
+  <div class="control-group ad_list" style="<% if f.object.link == 0 %> display:none; <% end %>">
+    <label class="control-label">AD List</label>
+    <div class="controls">
+      <label><%= f.select :linked_id, if f.object.link == 1 then @cpd_arr elsif f.object.link == 2 then @cpdm_arr else @cpx_arr end %></label>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">client</label>
+    <div class="controls">
+      <label><%= f.select :cli_id, @client_arr %></label>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">group</label>
+    <div class="controls">
+      <label>
+        <%= f.radio_button :group, 412, :checked=>f.object.group ==412 || f.object.kind == nil  %> 짭영제출문제(G1-2)
+      </label>
+      <label>
+        <%= f.radio_button :group, 413, :checked=>f.object.group ==413 %> 모의고사(G1-3)
+      </label>
+      <label>
+        <%= f.radio_button :group, 421, :checked=>f.object.group ==421 %> 오늘의 인강(G2-1)
+      </label>
+      <label>
+        <%= f.radio_button :group, 422, :checked=>f.object.group ==422 %> 짤강(G2-2)
+      </label>
+      <label>
+        <%= f.radio_button :group, 431, :checked=>f.object.group ==431 %> 헤럴드 뉴스(G3-1)
+      </label>
+      <label>
+        <%= f.radio_button :group, 432, :checked=>f.object.group ==432 %> 데일리 뉴스(G3-2)
+      </label>
+      <label>
+        <%= f.radio_button :group, 433, :checked=>f.object.group ==433 %> 수능정보(G3-3)
+      </label>
+      <label>
+        <%= f.radio_button :group, 434, :checked=>f.object.group ==434 %> 웹툰(G3-4)
+      </label>
+      <label>
+        <%= f.radio_button :group, 441, :checked=>f.object.group ==441 %> 짭영 캠페인(G4-1)
+      </label>
+      <label>
+        <%= f.radio_button :group, 442, :checked=>f.object.group ==442 %> 광고(G4-2)
+      </label>
+    </div>
+  </div>
+  <div class="control-group link" style="<% if f.object.link != 0 %> display:none; <% end %>">
+    <label class="control-label">ad_info</label>
+    <div class="controls">
+      <table>
+        <tr>
+          ad_type&nbsp;<select name='ad_type' >
+            <option value=306 <% if @screen_lock.present? && @screen_lock.ad_type.present? && @screen_lock.ad_type==306 %> selected="selected" <% end %>>CPC</option>
+            <option value=305 <% if @screen_lock.present? && @screen_lock.ad_type.present? && @screen_lock.ad_type==305 %> selected="selected" <% end %>>CPS</option>
+            <option value=304 <% if @screen_lock.present? && @screen_lock.ad_type.present? && @screen_lock.ad_type==304 %> selected="selected" <% end %>>CPE</option>
+            <option value=303 <% if @screen_lock.present? && @screen_lock.ad_type.present? && @screen_lock.ad_type==303 %> selected="selected" <% end %>>CPA</option>
+            <option value=302 <% if @screen_lock.present? && @screen_lock.ad_type.present? && @screen_lock.ad_type==302 %> selected="selected" <% end %>>CPL</option>
+            <option value=301 <% if @screen_lock.present? && @screen_lock.ad_type.present? && @screen_lock.ad_type==301 %> selected="selected" <% end %>>CPI</option>
+            <option value=400 <% if @screen_lock.present? && @screen_lock.ad_type.present? && @screen_lock.ad_type==400 %> selected="selected" <% end %>>WORD TEST</option>
+          </select>
+        </tr>
+        <tr>
+          <td>contract</td>
+          <td><input type='text' name='contract' style='width:280px;'<% if @screen_lock.present? && @screen_lock.contract.present? %> value='<%=@screen_lock.contract%>' <% end %>/></td>
+        </tr>
+        <tr>
+          <td>remain</td>
+          <td><input type='text' name='remain' style='width:280px;'<% if @screen_lock.present? && @screen_lock.remain.present? %> value='<%=@screen_lock.remain%>' <% end %>/></td>
+        </tr>
+        <tr>
+          <td>basic_show_price</td>
+          <td><input type='text' name='basic_show_price' style='width:280px;'<% if @screen_lock.present? && @screen_lock.basic_show_price.present? %> value='<%=@screen_lock.basic_show_price%>' <% end %>/></td>
+        </tr>
+        <tr>
+          <td>action_price</td>
+          <td><input type='text' name='action_price' style='width:280px;'<% if @screen_lock.present? && @screen_lock.action_price.present? %> value='<%=@screen_lock.action_price%>' <% end %>/></td>
+        </tr>
+        <tr>
+          <td>target_url</td>
+          <td><input type='text' name='target_url' style='width:280px;'<% if @screen_lock.present? && @screen_lock.target_url.present? %> value='<%=@screen_lock.target_url%>' <% end %>/></td>
+        </tr>
+        <tr>
+          <td>pay_type</td>
+          <td><input type='radio' name='pay_type' value='1' <% if (@screen_lock.present? && @screen_lock.pay_type==1) || !@screen_lock.present? %>checked="checked" <% end %>>선불제&nbsp;
+            <td><input type='radio' name='pay_type' value='2' <% if @screen_lock.present? && @screen_lock.pay_type==2 %>checked="checked" <% end %>>후불제&nbsp;
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">Date</label>
+    <div class="controls">
+        <%= f.text_field :start_date, :value => "#{@screen_lock.start_date}", :class => "calendar" %> ~
+        <%= f.text_field :end_date, :value => "#{@screen_lock.end_date}", :class=> "calendar" %>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">ad_image</label>
+    <div class="controls">
+      <label><%= f.file_field :ad_image %></label>
+    <%= image_tag f.object.ad_image_url if f.object.ad_image.present? %>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">reserve_image</label>
+    <div class="controls">
+      <label><%= f.file_field :reserve_image %></label>
+    <%= image_tag f.object.reserve_image_url if f.object.reserve_image.present? %>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">reward</label>
+    <div class="controls">
+      <label><%= f.text_field :reward %></label>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">point</label>
+    <div class="controls">
+      <label><%= f.text_field :point %></label>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">priority</label>
+    <div class="controls">
+      <label>
+        <%= f.radio_button :priority, 1, :checked=>  f.object.priority ==1  %>1 
+      </label>
+      <label>
+        <%= f.radio_button :priority, 2, :checked=>  f.object.priority ==2  %>2 
+      </label>
+      <label>
+        <%= f.radio_button :priority, 3, :checked=>  f.object.priority ==3  %>3 
+      </label>
+      <label>
+        <%= f.radio_button :priority, 4, :checked=>  f.object.priority ==4 %>4 
+      </label>
+      <label>
+        <%= f.radio_button :priority, 5, :checked=>  f.object.priority ==5 || f.object.priority ==  nil  %>5 
+      </label>
+    </div>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+
+
+
+

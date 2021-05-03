@@ -1,0 +1,159 @@
+<%= form_for [:admin, @cpdm_advertisement] do |f| %>
+  <% if @cpdm_advertisement.errors.any? %>
+  <%= f.error_messages %>
+<% end %>
+  <!--<div class="control-group">
+    <label class="control-label">kind</label>
+    <div class="controls">
+      <label>
+        <%#= f.radio_button :kind, 1, :checked=>  :kind ==1  %> 동영상
+      </label>
+    </div>
+  </div>
+-->  
+  <div class="control-group">
+    <label class="control-label">name</label>
+    <div class="controls">
+      <label><%= f.text_field :ad_name %></label>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">client</label>
+    <div class="controls">
+      <label><%= f.select :cli_id, @client_arr %></label>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">ad_type</label>
+    <div class="controls">
+      <label>
+        <%= f.radio_button :ad_type, 201, :checked=>f.object.ad_type ==201 || f.object.ad_type == nil  %> 영상광고
+      </label>
+      <label>
+        <%= f.radio_button :ad_type, 202, :checked =>f.object.ad_type ==202  %> 페북공유하기
+      </label>
+    </div>
+  </div>
+  <div class="control-group facebook" style="<% if f.object.ad_type != 202 %> display:none; <% end %>">
+    <label class="control-label">facebook_info</label>
+    <div class="controls">
+      <table>
+        <tr>
+          <td>단가</td>
+          <td><input type='text' name='f_price' style='width:280px;'<% if @cpdm_advertisement.present? && @cpdm_advertisement.additional_share_price.present? %> value='<%=@cpdm_advertisement.additional_share_price%>' <% end %>/></td>
+        </tr>
+        <tr>
+          <td>리워드</td>
+          <td><input type='text' name='f_reward' style='width:280px;'<% if @cpdm_advertisement.present? && @cpdm_advertisement.reward.present? %> value='<%=@cpdm_advertisement.reward%>' <% end %>/></td>
+        </tr>
+        <tr>
+          <td>포인트</td>
+          <td><input type='text' name='f_point' style='width:280px;'<% if @cpdm_advertisement.present? && @cpdm_advertisement.point.present? %> value='<%=@cpdm_advertisement.point%>' <% end %>/></td>
+        </tr>
+        <tr>
+          <td>링크</td>
+          <td><input type='text' name='f_link' style='width:280px;'<% if @cpdm_advertisement.present? && @cpdm_advertisement.link.present? %> value='<%=@cpdm_advertisement.link%>' <% end %>/></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">contract</label>
+    <div class="controls">
+      <label><%= f.text_field :contract %></label>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">remain</label>
+    <div class="controls">
+      <label><%= f.text_field :remain %></label
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">basic_show_price</label>
+    <div class="controls">
+      <%= f.text_field :basic_show_price %>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">pay_type</label>
+    <div class="controls">
+      <label>
+        <%= f.radio_button :pay_type, 1, :checked=>f.object.pay_type ==1 || f.object.pay_type == nil  %> 선불제
+      </label>
+      <label>
+        <%= f.radio_button :pay_type, 2, :checked =>f.object.pay_type ==2  %> 후불제
+      </label>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">Date</label>
+    <div class="controls">
+        <%= f.text_field :start_date, :value => "#{@cpdm_advertisement.start_date}", :class => "date" %> ~
+        <%= f.text_field :end_date, :value => "#{@cpdm_advertisement.end_date}", :class=> "date" %>
+    </div>
+  </div>
+  <!--
+  <div class="control-group">
+    <label class="control-label">url</label>
+    <div class="controls">
+      <label><%= f.text_field :url %></label>
+    </div>
+  </div>
+  -->
+  <div class="control-group">
+    <label class="control-label">video file</label>
+    <div class="controls">
+      <label><%= f.file_field :video %></label>
+      <%= video_tag f.object.url if f.object.url? %>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">length</label>
+    <div class="controls">
+      <label><%= f.text_field :length %></label>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">skip</label>
+    <div class="controls">
+      <label><%= f.text_field :skip %></label>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label">priority</label>
+    <div class="controls">
+      <label>
+        <%= f.radio_button :priority, 1, :checked=>  f.object.priority ==1  %>1 
+      </label>
+      <label>
+        <%= f.radio_button :priority, 2, :checked=>  f.object.priority ==2  %>2 
+      </label>
+      <label>
+        <%= f.radio_button :priority, 3, :checked=>  f.object.priority ==3  %>3 
+      </label>
+      <label>
+        <%= f.radio_button :priority, 4, :checked=>  f.object.priority ==4 || f.object.priority == nil  %>4 
+      </label>
+      <label>
+        <%= f.radio_button :priority, 5, :checked=>  f.object.priority ==5  %>5 
+      </label>
+    </div>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+
+
+<% end %>
+<script>
+$(document).ready(function() {
+  $("input[name='cpdm_advertisement[ad_type]']").change(function() {
+    if($(this).val() == '202') {
+      $('.facebook').show();
+    } else {
+      $('.facebook').hide();
+    }
+  })
+});
+</script>
